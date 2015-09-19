@@ -89,10 +89,7 @@ $(document).ready(function(){
 	    language:(navigator.browserLanguage || navigator.language).toLowerCase()
 	}
 	
-	if(browser.versions.android && !browser.versions.weixin)
-	{
-		alert("android");
-	}else if(browser.versions.ios && !browser.versions.weixin && !browser.versions.qq)
+	if(browser.versions.ios && !browser.versions.weixin && !browser.versions.qq)
 	{
 		window.location="https://itunes.apple.com/us/app/offering/id1020064463?l=zh&ls=1&mt=8";
 	}
@@ -188,13 +185,13 @@ $(document).ready(function(){
 	});
 	
 	$("#viewBtn").bind("click",function(){
-		if(browser.versions.weixin || browser.versions.qq )
+		if(browser.versions.android)
+		{
+			window.location ="http://fir.im/v6km";
+			return;
+		}else if(browser.versions.weixin || browser.versions.qq )
 		{
 			$("#iosModal").modal("show");
-		}else if(browser.versions.android)
-		{
-			alert("android");
-			return;
 		}else if(browser.versions.ios)
 		{
 			window.location ="https://itunes.apple.com/us/app/offering/id1020064463?l=zh&ls=1&mt=8";
