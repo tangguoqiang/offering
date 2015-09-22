@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ import com.offering.core.service.UserService;
 
 @Controller
 public class MainController {
+	
+	private final static Logger LOG = Logger.getLogger(MainController.class);
 	
 	@Autowired
 	private MainService mainService;
@@ -125,7 +128,11 @@ public class MainController {
 			@PathVariable("fileName")String fileName,@PathVariable("suff")String suff,
 			HttpServletResponse rep){
 		rep.setHeader("Content-Disposition", "attachment; filename=" + fileName + "." + suff);  
-		rep.setContentType("image/*");  
+		LOG.info(fileName + "." + suff);
+		if("apk".equals(suff))
+			rep.setContentType("application/vnd.android.package-archive"); 
+		else
+			rep.setContentType("image/*");  
 		String filePath = GloabConstant.ROOT_DIR + path + "/" + fileName + "." + suff;
 		FileInputStream fis = null; 
         OutputStream os = null; 

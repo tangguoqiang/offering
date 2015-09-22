@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.offering.bean.AppVersion;
 import com.offering.bean.Comcode;
 import com.offering.bean.ParamInfo;
 import com.offering.bean.School;
 import com.offering.bean.Suggest;
+import com.offering.common.constant.GloabConstant;
 import com.offering.common.utils.Utils;
 import com.offering.core.dao.BaseDao;
 import com.offering.core.service.SystemService;
@@ -23,6 +25,8 @@ public class SystemServiceImpl implements SystemService{
 	private BaseDao<Comcode> comcodeDao;
 	@Autowired
 	private BaseDao<Suggest> suggestDao;
+	@Autowired
+	private BaseDao<AppVersion> versionDao;
 	
 	public List<School> listSchools(String province)
 	{
@@ -50,5 +54,17 @@ public class SystemServiceImpl implements SystemService{
 	public void insertSuggest(Suggest s)
 	{
 		suggestDao.insertRecord(s, "SYS_SUGGEST");
+	}
+	
+	public AppVersion getCurrentVersion(String deviceType)
+	{
+		StringBuilder sql = new StringBuilder();
+		sql.append(" select versionCode,versionName,updateDesc,appUrl FROM SYS_APPVERSION ")
+		   .append("WHERE insertTime IS NOT NULL AND deviceType=? AND status=? ")
+		   .append("ORDER BY insertTime DESC LIMIT 1 ");
+		ParamInfo paramInfo = new ParamInfo();
+		paramInfo.setTypeAndData(Types.CHAR, deviceType);
+		paramInfo.setTypeAndData(Types.CHAR, GloabConstant.STATUS_EFFECT);
+		return versionDao.getRecord(sql.toString(),paramInfo,AppVersion.class);
 	}
 }

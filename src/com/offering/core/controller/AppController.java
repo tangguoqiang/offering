@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.offering.bean.Activity;
+import com.offering.bean.AppVersion;
 import com.offering.bean.ChartGroup;
 import com.offering.bean.Comcode;
 import com.offering.bean.Greater;
@@ -1005,5 +1006,22 @@ public class AppController {
 		}else{
 			return Utils.failture("登陆失效，请重新登陆！");
 		}
+	}
+	
+	/**
+	 * 获取当前app版本
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/getCurrentVersion",method={RequestMethod.POST})
+	@ResponseBody
+	public Map<String, Object> getCurrentVersion(String deviceType) {
+		AppVersion version = sysService.getCurrentVersion(deviceType);
+		Map<String, Object> dataMap = new HashMap<String,Object>();
+		dataMap.put("versionCode", version.getVersionCode());
+		dataMap.put("versionName", version.getVersionName());
+		dataMap.put("updateDesc", version.getUpdateDesc());
+		dataMap.put("appUrl", version.getAppUrl());
+		return Utils.success(dataMap);
 	}
 }
