@@ -206,6 +206,7 @@ public class AppController {
 			user.setToken(token);
 			user.setType(GloabConstant.USER_TYPE_NORMAL);
 			user.setLogin_type(GloabConstant.LOGIN_TYPE_PHONE);
+			user.setInsertTime(System.currentTimeMillis() + "");
 			long userId = userService.insertUser(user);
 			
 			Map<String, Object> dataMap = new HashMap<String, Object>();

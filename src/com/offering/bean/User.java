@@ -44,6 +44,7 @@ public class User implements Serializable{
 	private String rc_token;
 	
 	private String industry;
+	private String insertTime;
 	
 	public String getId() {
 		return id;
@@ -195,5 +196,13 @@ public class User implements Serializable{
 
 	public void setBackground_url(String background_url) {
 		this.background_url = background_url;
+	}
+
+	public String getInsertTime() {
+		return insertTime;
+	}
+
+	public void setInsertTime(String insertTime) {
+		this.insertTime = insertTime;
 	}
 }
