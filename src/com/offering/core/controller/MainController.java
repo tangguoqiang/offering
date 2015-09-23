@@ -1,5 +1,6 @@
 package com.offering.core.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -130,10 +131,16 @@ public class MainController {
 		rep.setHeader("Content-Disposition", "attachment; filename=" + fileName + "." + suff);  
 		LOG.info(fileName + "." + suff);
 		if("apk".equals(suff))
-			rep.setContentType("application/vnd.android.package-archive"); 
+		{
+//			rep.setHeader("Content-Encoding","gzip");
+			rep.setContentType("application/octet-stream");
+		}
 		else
 			rep.setContentType("image/*");  
 		String filePath = GloabConstant.ROOT_DIR + path + "/" + fileName + "." + suff;
+		long contentLength = new File(filePath).length();
+		LOG.info("apk文件大小:" + contentLength);
+        rep.setContentLength((int) contentLength);
 		FileInputStream fis = null; 
         OutputStream os = null; 
         try {
