@@ -1019,10 +1019,18 @@ public class AppController {
 	public Map<String, Object> getCurrentVersion(String deviceType) {
 		AppVersion version = sysService.getCurrentVersion(deviceType);
 		Map<String, Object> dataMap = new HashMap<String,Object>();
-		dataMap.put("versionCode", version.getVersionCode());
-		dataMap.put("versionName", version.getVersionName());
-		dataMap.put("updateDesc", version.getUpdateDesc());
-		dataMap.put("appUrl", version.getAppUrl());
+		if(version != null)
+		{
+			dataMap.put("versionCode", version.getVersionCode());
+			dataMap.put("versionName", version.getVersionName());
+			dataMap.put("updateDesc", version.getUpdateDesc());
+			dataMap.put("appUrl", version.getAppUrl());
+		}else{
+			dataMap.put("versionCode", "");
+			dataMap.put("versionName", "");
+			dataMap.put("updateDesc", "");
+			dataMap.put("appUrl", "");
+		}
 		return Utils.success(dataMap);
 	}
 }
